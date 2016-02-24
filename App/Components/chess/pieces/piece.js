@@ -6,16 +6,19 @@ class Piece {
   }
 
   validMove(endPos) {
-    let possibleMoves = this.possibleMoves()
+    let movesOutOfCheck = [],
+        possibleMoves = this.possibleMoves(),
+        board = this.board
+
     for (var i = 0; i < possibleMoves.length; i++) {
       let move = possibleMoves[i]
-      if (endPos[0] === move[0] && endPos[1] === move[1]) {
+      if ( endPos[0] === move[0] && endPos[1] === move[1] && !board.movesIntoCheck(this.pos, endPos, this.color)) {
         return true
       }
     }
-
     return false
   }
+
 
   updatePosition(pos) {
     this.pos = pos

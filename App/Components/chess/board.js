@@ -1,14 +1,5 @@
 import { Piece, Rook, Knight, Bishop, Queen, King, Pawn, SlidingPiece, SteppingPiece } from './pieces/piece'
 
-// const {
-//   Rook,
-//   Knight,
-//   Bishop,
-//   Queen,
-//   King,
-//   Pawn
-// } = Piece
-
 export default class Board {
   constructor() {
     this.grid = this.createGrid()
@@ -25,26 +16,39 @@ export default class Board {
 
   inCheck(color) {
     let opposingColor = (color === "white") ? "black" : "white"
-    let opposingPieces = coloredPieces(opposingColor)
-    let kingPos = findKing(color)
+    let opposingPieces = this.coloredPieces(opposingColor)
+    let kingPos = this.findKing(color)
 
-    let inCheck = false
+    let isInCheck = false
     opposingPieces.forEach( piece  => {
-      if ( piece.validMove(kingPos) ) {
-        inCheck = true
+      let possibleMoves = piece.possibleMoves()
+      for (var i = 0; i < possibleMoves.length; i++) {
+        let move = possibleMoves[i]
+        if (kingPos[0] === move[0] && kingPos[1] === move[1]) {
+          isInCheck = true
+        }
       }
     })
-    return inCheck
+
+    return isInCheck
+  }
+
+  movesIntoCheck(pos, end, color) {
+    let testBoard = this.duped()
+
+    testBoard.move(pos, end)
+    return (testBoard.inCheck(color)) ? true : false
   }
 
   findKing(color) {
-    this.grid.forEach(row => {
-      row.forEach(piece => {
-        if ( piece !== null && piece.color === color && piece.to_s() === "K" ) {
+    for (var i = 0; i < this.grid.length; i++) {
+      for (var j = 0; j < this.grid.length; j++) {
+        let piece = this.grid[i][j]
+        if ( piece !== null && piece.constructor.name === "King" && piece.color === color) {
           return piece.pos
         }
-      })
-    })
+      }
+    }
   }
 
   checkmate(color) {
@@ -54,7 +58,7 @@ export default class Board {
     pieces.forEach(piece => {
       let pieceMoves = piece.possibleMoves()
       pieceMoves.forEach(move => {
-        let testBoard = board.duped
+        let testBoard = board.duped()
         testBoard.move(piece.pos, move)
         if (!testBoard.inCheck(color)) {
           checkmate = false
@@ -72,10 +76,10 @@ export default class Board {
         let piece = this.grid[i][j]
 
         if (piece === null) {
-          dupedBoard[i][j] = null
+          dupedBoard.grid[i][j] = null
         } else {
-          let klass = piece.constructor.name
-          dupedBoard[i][j] = new klass([i, j], piece.color, dupedBoard)
+          let klass = piece.constructor
+          dupedBoard.grid[i][j] = new klass([i, j], piece.color, dupedBoard)
         }
       }
     }
@@ -105,11 +109,10 @@ export default class Board {
   move(start, end) {
     let piece = this.grid[start[0]][start[1]]
     if (piece === null) return; //do something else tho
-    if (!piece.validMove(end)) return; //do something else tho
-
     piece.updatePosition(end)
     this.grid[end[0]][end[1]] = piece
     this.grid[start[0]][start[1]] = null
+
     return this.grid
   }
 
