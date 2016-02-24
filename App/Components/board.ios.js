@@ -100,13 +100,31 @@ const Board = React.createClass({
     return [...squares, ...pieces]
   },
 
+  canCastle(piece) {
+    let type = piece.constructor.name,
+        king = this.state.piece,
+        kingMoves = king.possibleMoves(),
+        pos = piece.pos
+
+    if (type === "Rook" && !piece.moved && !king.moved) {
+      for (var i = 0; i < kingMoves.length; i++) {
+        let move = kingMoves[i]
+        if (piece.pos[0] === move[0] && piece.pos[1] === move[1]) {
+          return true
+        }
+      }
+    }
+
+    return false
+  },
+
   onPieceSelected(row, column, color) {
     let currentColor = (this.props.turn === "#FFFFFF") ? "white" :       "black"
     let selectedPiece = this.state.selectedPiece
+    let piece = this.props.game.board.grid[row][column]
 
-
-    if (selectedPiece !== null) {
-      if (currentColor !== color) {
+    if (selectedPiece !== null ) {
+      if (currentColor !== color || this.canCastle(piece)) {
         this.onSquareSelected(row, column)
       } else {
         if (selectedPiece.row !== row || selectedPiece.column !== column) {
@@ -116,7 +134,7 @@ const Board = React.createClass({
         }
       }
     } else {
-      this.setState({ selectedPiece: {row: row, column: column}, piece: this.props.game.board.grid[row][column] });
+      this.setState({ selectedPiece: {row: row, column: column}, piece: piece });
     }
   },
 

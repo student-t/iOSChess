@@ -21,7 +21,12 @@ class Piece {
 
 
   updatePosition(pos) {
+    let type = this.constructor.name
+    if (type === "Rook" || type === "King") {
+      this.moved = true
+    }
     this.pos = pos
+
   }
 
   validMovePlay(pos) {
@@ -146,6 +151,7 @@ class Rook extends SlidingPiece {
   constructor(pos, color, board) {
     super(pos, color, board)
     this.moves = ORTHOGONAL_MOVES
+    this.moved = false
   }
 
   toString() {
@@ -173,6 +179,8 @@ class Knight extends SteppingPiece {
   toString() {
     return "♞"
   }
+
+
 }
 
 const KING_MOVES = [
@@ -190,10 +198,45 @@ class King extends SteppingPiece {
   constructor(pos, color, board) {
     super(pos, color, board)
     this.moves = KING_MOVES
+    this.moved = false
   }
 
   toString() {
     return "♚"
+  }
+
+  possibleMoves() {
+    return this.getPositions(this.moves).concat(this.castleMoves())
+  }
+
+  castleMoves() {
+    if (this.moved) return []
+    let board = this.board,
+        moves = [],
+        grid = board.grid,
+        pos = this.pos,
+        color = this.color
+
+
+    let x, y, leftOne, leftTwo, leftThree, leftRook, rightOne, rightTwo, rightThree, rightRook;
+    [x, y] = pos
+
+    leftOne = grid[x - 1][y]
+    leftTwo = grid[x - 2][y]
+    leftThree = grid[x - 3][y]
+    leftRook = grid[x - 4][y]
+    rightOne = grid[x + 1][y]
+    rightTwo = grid[x + 2][y]
+    rightRook = grid[x + 3][y]
+
+    if (leftRook.constructor.name === "Rook" && !leftRook.moved && !board.moveIntoCheck(pos, leftOne, color) && !board.moveIntoCheck(pos, leftTwo, color) &&
+    !board.moveIntoCheck(pos, leftThree, color)) {
+      moves.push([x - 3, y])
+    }
+
+    if (rightRook.constructor.name === "Rook" && !rightRook.moved && !board.moveIntoCheck(pos, rightOne, color) && !board.moveIntoCheck(pos, rightTwo, color)) {
+      moves.push([x - 3, y])
+    }
   }
 }
 

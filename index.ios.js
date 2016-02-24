@@ -34,7 +34,7 @@ var iosChess = React.createClass({
     if (this.state.gameOver) {
       headerText = (
         <Text style={styles.turn}>
-          Game Over!
+          Game Over, {player} wins!
         </Text>
       )
     }
