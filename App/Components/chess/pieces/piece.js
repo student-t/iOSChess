@@ -93,9 +93,9 @@ class SlidingPiece extends Piece {
           while (this.validMovePlay(posMove)) {
             newPositions.push(posMove)
 
-            if (this.attack(posMove)) {
-              return newPositions
-            }
+            // if (this.attack(posMove)) {
+            //   return newPositions
+            // }
 
             let x, y;
             [x, y] = posMove

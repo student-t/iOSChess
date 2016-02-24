@@ -53,20 +53,20 @@ export default class Board {
 
   checkmate(color) {
     let board = this
-    let pieces = coloredPieces(color)
-    let checkmate = true
-    pieces.forEach(piece => {
-      let pieceMoves = piece.possibleMoves()
-      pieceMoves.forEach(move => {
-        let testBoard = board.duped()
-        testBoard.move(piece.pos, move)
-        if (!testBoard.inCheck(color)) {
-          checkmate = false
-        }
-      })
-    })
+    let pieces = this.coloredPieces(color)
 
-    return checkmate
+    for (var i = 0; i < pieces.length; i++) {
+      let piece = pieces[i]
+      let moves = piece.possibleMoves()
+      for (var j = 0; j < moves.length; j++) {
+        let move = moves[j]
+        if (!this.movesIntoCheck(piece.pos, move, piece.color)) {
+          return false
+        }
+      }
+    }
+
+    return true
   }
 
   duped() {
@@ -108,11 +108,10 @@ export default class Board {
 
   move(start, end) {
     let piece = this.grid[start[0]][start[1]]
-    if (piece === null) return; //do something else tho
+    if (piece === null) return;
     piece.updatePosition(end)
     this.grid[end[0]][end[1]] = piece
     this.grid[start[0]][start[1]] = null
-
     return this.grid
   }
 

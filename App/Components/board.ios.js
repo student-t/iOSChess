@@ -28,6 +28,7 @@ const Board = React.createClass({
   },
 
   render() {
+
     let tiles = this.createTiles()
 
     return (
@@ -126,11 +127,7 @@ const Board = React.createClass({
 
     this.endPos = [row, column]
     this.props.game.move(this.startPos, this.endPos)
-    // if (this.props.game.move(this.startPos, this.endPos)) {
-    //   keys[row][column] = keys[this.state.selectedPiece.row][this.state.selectedPiece.column];
-    //   keys[this.state.selectedPiece.row][this.state.selectedPiece.column] = null;
-    // }
-    this.turnComplete();
+    this.turnComplete()
   },
 
   turnComplete() {
@@ -152,16 +149,3 @@ const styles = StyleSheet.create({
 });
 
 module.exports = Board;
-
-
-// pieces.push(
-//   <Piece
-//     piece={row.charAt(i).toLowerCase()}
-//     key={keys[rowIndex][column]}
-//     color={color}
-//     column={column}
-//     row={rowIndex}
-//     selectable={this.props.turn === color ||
-//                 moves.indexOf(CONSTANTS.COLUMNS[column] + CONSTANTS.ROWS[rowIndex]) !== -1 }
-//     onPieceSelect={this.onPieceSelected}/>
-// );
