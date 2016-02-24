@@ -250,13 +250,13 @@ class Pawn extends Piece {
   }
 
   isAtStart() {
-    if ( this.color === "black" && this.pos[0] === 6 ) return true;
-    else if ( this.color === "white" && this.pos[0] === 1 ) return true;
+    if ( this.color === "black" && this.pos[0] === 1 ) return true;
+    else if ( this.color === "white" && this.pos[0] === 6 ) return true;
     else return false;
   }
 
   orientMoves(moves) {
-    if (this.color === "black") {
+    if (this.color === "white") {
       return moves.map(move => {
         let x, y
         [x, y] = move
