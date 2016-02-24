@@ -79,7 +79,7 @@ const Board = React.createClass({
         )
 
         if ( piece !== null) {
-          let type = piece.toString().toLowerCase(),
+          let type = piece.toString(),
               color = piece.color
 
           pieces.push(

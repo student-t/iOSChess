@@ -21,7 +21,6 @@ const Piece = React.createClass({
   },
 
   render() {
-
     const containerStyle = {
       top: this.props.row * (375/8),
       left: this.props.column * (375/8)
@@ -36,7 +35,7 @@ const Piece = React.createClass({
         <View style={[styles.container, containerStyle]} ref='this'>
           <TouchableHighlight onPress={this.onPress} >
             <Text style={[styles.text, textStyle]}>
-              {this.props.piece.toUpperCase()}
+              {this.props.piece}
             </Text>
           </TouchableHighlight>
         </View>

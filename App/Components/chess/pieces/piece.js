@@ -135,7 +135,7 @@ class Bishop extends SlidingPiece {
   }
 
   toString() {
-    return "B"
+    return "♝"
   }
 }
 
@@ -146,7 +146,7 @@ class Rook extends SlidingPiece {
   }
 
   toString() {
-    return "R"
+    return "♜"
   }
 }
 
@@ -157,7 +157,7 @@ class Queen extends SlidingPiece {
   }
 
   toString() {
-    return "Q"
+    return "♛"
   }
 }
 
@@ -168,7 +168,7 @@ class Knight extends SteppingPiece {
   }
 
   toString() {
-    return "H"
+    return "♞"
   }
 }
 
@@ -190,7 +190,7 @@ class King extends SteppingPiece {
   }
 
   toString() {
-    return "K"
+    return "♚"
   }
 }
 
@@ -215,7 +215,7 @@ class Pawn extends Piece {
   }
 
   toString() {
-    return "P"
+    return "♟"
   }
 
   possibleMoves() {
