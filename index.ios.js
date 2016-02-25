@@ -139,9 +139,9 @@ var styles = StyleSheet.create({
 
   image: {
     position: 'absolute',
-    top: 250,
-    height: 500,
-    width: 500,
+    top: 320,
+    marginLeft: 50,
+    alignSelf: "center",
     opacity: 0.75
   },
 
@@ -152,7 +152,7 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     marginLeft: 25,
     fontWeight: "600",
-    top: 225
+    top: 200
   },
 
   log: {
@@ -170,7 +170,8 @@ var styles = StyleSheet.create({
     width: 375,
     textAlign: 'center',
     bottom: 140,
-    marginLeft: 25
+    marginLeft: 25,
+    backgroundColor: '#f2f2f2'
   },
 
   portfolio: {
@@ -179,7 +180,8 @@ var styles = StyleSheet.create({
     width: 375,
     textAlign: 'center',
     bottom: 120,
-    marginLeft: 25
+    marginLeft: 25,
+    backgroundColor: '#f2f2f2'
   },
 
   gameOver: {
@@ -211,7 +213,7 @@ var styles = StyleSheet.create({
     position: 'absolute',
     width: 375,
     textAlign: 'center',
-    top: 300,
+    top: 260,
     backgroundColor: "#c3c3c3",
     borderRadius: 3,
     marginLeft: 20
