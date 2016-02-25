@@ -26,7 +26,6 @@ class Piece {
       this.moved = true
     }
     this.pos = pos
-
   }
 
   validMovePlay(pos) {
@@ -206,14 +205,15 @@ class King extends SteppingPiece {
   }
 
   possibleMoves() {
-    return this.getPositions(this.moves).concat(this.castleMoves())
+    let kingMoves = this.getPositions(this.moves)
+    let castleMoves = this.castleMoves()
+    return castleMoves.concat(kingMoves)
   }
 
   castleMoves() {
     if (this.moved) return []
     let board = this.board,
         moves = [],
-        grid = board.grid,
         pos = this.pos,
         color = this.color
 
@@ -221,22 +221,32 @@ class King extends SteppingPiece {
     let x, y, leftOne, leftTwo, leftThree, leftRook, rightOne, rightTwo, rightThree, rightRook;
     [x, y] = pos
 
-    leftOne = grid[x - 1][y]
-    leftTwo = grid[x - 2][y]
-    leftThree = grid[x - 3][y]
-    leftRook = grid[x - 4][y]
-    rightOne = grid[x + 1][y]
-    rightTwo = grid[x + 2][y]
-    rightRook = grid[x + 3][y]
+    leftOne = board.grid[x][y - 1]
+    leftTwo = board.grid[x][y - 2]
+    leftThree = board.grid[x][y- 3]
+    leftRook = board.grid[x][y- 4]
+    rightOne = board.grid[x][y+ 1]
+    rightTwo = board.grid[x][y+ 2]
+    rightRook = board.grid[x][y+ 3]
 
-    if (leftRook.constructor.name === "Rook" && !leftRook.moved && !board.moveIntoCheck(pos, leftOne, color) && !board.moveIntoCheck(pos, leftTwo, color) &&
-    !board.moveIntoCheck(pos, leftThree, color)) {
-      moves.push([x - 3, y])
+
+    if (leftOne === null && leftTwo === null && leftThree === null) {
+      if (leftRook.constructor.name === "Rook" && !leftRook.moved) {
+      // &&
+      // !board.movesIntoCheck(pos, leftOne, color) && !board.movesIntoCheck(pos, leftTwo, color) &&
+      // !board.movesIntoCheck(pos, leftThree, color)) {
+        moves.push([x, y - 2])
+      }
     }
 
-    if (rightRook.constructor.name === "Rook" && !rightRook.moved && !board.moveIntoCheck(pos, rightOne, color) && !board.moveIntoCheck(pos, rightTwo, color)) {
-      moves.push([x - 3, y])
+    if ( rightOne === null && rightTwo === null ) {
+      if (rightRook.constructor.name === "Rook" && !rightRook.moved)  {
+      // && !board.movesIntoCheck(pos, rightOne, color) && !board.movesIntoCheck(pos, rightTwo, color)) {
+        moves.push([x, y + 2])
+      }
     }
+
+  return moves
   }
 }
 

@@ -61,6 +61,7 @@ export default class Board {
       for (var j = 0; j < moves.length; j++) {
         let move = moves[j]
         if (!this.movesIntoCheck(piece.pos, move, piece.color)) {
+
           return false
         }
       }
@@ -106,13 +107,47 @@ export default class Board {
     return ( x >= 0 && x <= 7 && y >= 0 && y <= 7 )
   }
 
-  move(start, end) {
-    let piece = this.grid[start[0]][start[1]]
-    if (piece === null) return;
-    piece.updatePosition(end)
-    this.grid[end[0]][end[1]] = piece
+  castleLeft(start, end) {
+    let piece = this.grid[start[0]][start[1]],
+        rook = this.grid[start[0]][start[1]  -4]
+
+    rook.updatePosition([start[0],start[1] - 1])
+    this.grid[start[0]][start[1] - 1] = rook
+    this.grid[start[0]][start[1] - 4] = null
     this.grid[start[0]][start[1]] = null
     return this.grid
+  }
+
+  castleRight(start, end) {
+    let piece = this.grid[start[0]][start[1]],
+        rook = this.grid[start[0]][start[1] + 3]
+
+    rook.updatePosition([start[0], start[1] + 1])
+    this.grid[start[0]][start[1] + 1] = rook
+    this.grid[start[0]][start[1] + 3] = null
+    this.grid[start[0]][start[1]] = null
+    return this.grid
+  }
+
+  move(start, end) {
+    let piece = this.grid[start[0]][start[1]],
+        rook
+    if (piece === null) return;
+    piece.updatePosition(end)
+
+    if (piece.constructor.name === "King" && (end[1] === (start[1] + 2) || end[1] === (start[1] -  2))) {
+      this.grid[end[0]][end[1]] = piece
+      if (end[1] === (start[1] + 2)) {
+        this.castleRight(start, end)
+      } else {
+        this.castleLeft(start, end)
+      }
+    } else {
+      this.grid[end[0]][end[1]] = piece
+      this.grid[start[0]][start[1]] = null
+      return this.grid
+    }
+
   }
 
   placeStartingPositions() {

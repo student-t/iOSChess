@@ -101,6 +101,7 @@ const Board = React.createClass({
   },
 
   canCastle(piece) {
+    
     let type = piece.constructor.name,
         king = this.state.piece,
         kingMoves = king.possibleMoves(),

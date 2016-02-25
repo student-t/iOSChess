@@ -44,7 +44,7 @@ const Piece = React.createClass({
       return (
         <View style={[styles.container, containerStyle]} ref='this'>
             <Text style={[styles.text, textStyle]}>
-              {this.props.piece.toUpperCase()}
+              {this.props.piece}
             </Text>
         </View>
       );
