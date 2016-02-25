@@ -216,7 +216,8 @@ var styles = StyleSheet.create({
     top: 260,
     backgroundColor: "#c3c3c3",
     borderRadius: 3,
-    marginLeft: 20
+    marginLeft: 20,
+    fontWeight: "600"
   },
 
   history: {
