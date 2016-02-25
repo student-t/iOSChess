@@ -282,6 +282,7 @@ class Pawn extends Piece {
 
     let newPositions = (this.isAtStart) ? orientStartMoves : orientRegMoves
     return [...newPositions, ...orientAttackMoves]
+    // return [...newPositions, ...orientAttackMoves].concat(this.enPassantMoves())
   }
 
   attackPositions(deltas) {
@@ -305,6 +306,35 @@ class Pawn extends Piece {
     })
     return positions
   }
+
+  // enPassantMoves() {
+  //   let moves = [],
+  //       pos = this.pos,
+  //       board = this.board
+  //
+  //   if (this.pos[0] === 3 && this.color === "white") {
+  //     let leftSquare = board.grid[3][this.pos[1] - 1]
+  //     let rightSquare = board.grid[3][this.pos[1] + 1]
+  //     if (leftSquare !== null && leftSquare.constructor.name === "Pawn" && leftSquare.color === "black") {
+  //       moves.push([2, this.pos[1] - 1])
+  //     }
+  //     if (rightSquare !== null && rightSquare.constructor.name === "Pawn" && rightSquare.color === "black") {
+  //       moves.push([2, this.pos[1] + 1])
+  //     }
+  //   }
+  //
+  //   if (pos[0] === 4 && this.color === "black") {
+  //     let leftSquare = board.grid[3][pos[1] - 1]
+  //     let rightSquare = board.grid[3][pos[1] + 1]
+  //     if (leftSquare !== null && leftSquare.constructor.name === "Pawn" && leftSquare.color === "white") {
+  //       moves.push([5, pos[1] - 1])
+  //     }
+  //     if (rightSquare !== null && rightSquare.constructor.name === "Pawn" && rightSquare.color === "white") {
+  //       moves.push([5, pos[1] + 1])
+  //     }
+  //   }
+  //   return moves
+  // }
 
   isAtStart() {
     if ( this.color === "black" && this.pos[0] === 1 ) return true;
