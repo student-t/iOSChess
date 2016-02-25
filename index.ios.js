@@ -2,6 +2,7 @@
 var React = require('react-native');
 var {
   AppRegistry,
+  TouchableHighlight,
   StyleSheet,
   Text,
   View,
@@ -21,9 +22,21 @@ var iosChess = React.createClass({
     };
   },
 
+  newGame() {
+    this.setState({turn: CONSTANTS.WHITE, game: new Game(), gameOver: false})
+  },
+
   render() {
+
     let turn = this.state.turn,
-        player = (turn === CONSTANTS.WHITE) ? "Black" : "White"
+        player = (turn === CONSTANTS.WHITE) ? "Black" : "White",
+        playAgain = (
+          <Text style={styles.gameOver} onPress={this.newGame}>
+            Reset Game
+          </Text>
+        ),
+        history = this.state.game.history,
+        log
 
     let headerText = (
       <Text style={styles.turn}>
@@ -31,28 +44,43 @@ var iosChess = React.createClass({
       </Text>
     )
 
+    if (history.length > 0) {
+
+      let fromPos = history[history.length - 1],
+          toPos = history[history.length - 2]
+      log = (
+        <Text style={styles.log}>
+          {player} moved from {fromPos} to {toPos}
+        </Text>
+      )
+    }
+
     if (this.state.gameOver) {
       headerText = (
-        <Text style={styles.turn}>
+        <Text style={styles.turn} >
           Game Over, {player} wins!
+        </Text>
+      )
+
+      playAgain = (
+        <Text style={styles.gameOver} onPress={this.newGame}>
+          Play Again
         </Text>
       )
     }
 
     return (
-      <View ref='this' style={styles.container}>
-        {headerText}
-
-        <Board turn={this.state.turn} turnComplete={this.turnComplete} game={this.state.game}/>
-
-
-      </View>
-    );
+        <View ref='this' style={styles.container}>
+          {headerText}
+          <Board turn={this.state.turn} turnComplete={this.turnComplete} game={this.state.game}/>
+          {log}
+          {playAgain}
+        </View>
+    )
   },
 
   turnComplete() {
     let gameOver = this.state.game.isOver()
-
     this.setState({ turn: this.state.turn === CONSTANTS.WHITE ? CONSTANTS.BLACK : CONSTANTS.WHITE, gameOver: gameOver })
   },
 
@@ -74,22 +102,49 @@ var styles = StyleSheet.create({
     opacity: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#f2f2f2',
   },
+
   turn: {
     fontSize: 30,
     position: 'absolute',
     width: 375,
     textAlign: 'center',
-    top: 50
+    top: 100,
+    marginLeft: 25
+  },
+
+  log: {
+    fontSize: 18,
+    position: 'absolute',
+    width: 375,
+    textAlign: 'center',
+    bottom: 140,
+    marginLeft: 25
   },
 
   gameOver: {
+    fontSize: 20,
+    position: 'absolute',
+    width: 375,
+    textAlign: 'center',
+    bottom: 80,
+    backgroundColor: "#cfd7db",
+    borderRadius: 3,
+    marginLeft: 20,
+    padding: 10,
+    width: 375,
+    fontWeight: "600"
+  },
+
+  newGame: {
     fontSize: 30,
     position: 'absolute',
     width: 375,
     textAlign: 'center',
-    top: 80
+    top: 120,
+    backgroundColor: "#c3c3c3",
+    borderRadius: 3
   },
 
   history: {
@@ -100,9 +155,9 @@ var styles = StyleSheet.create({
     width: 375,
     top: 550
   }
-});
+})
 
-AppRegistry.registerComponent('iosChess', () => iosChess);
+AppRegistry.registerComponent('iosChess', () => iosChess)
 
 // <Text style={styles.history}>
 //   {history.length > 0 ?

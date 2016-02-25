@@ -38,6 +38,17 @@ const Board = React.createClass({
     );
   },
 
+  pushHistory(pos) {
+    let row = pos[0],
+        col = pos[1]
+
+    const currentSquare = {
+      square: CONSTANTS.COLUMNS[col] + CONSTANTS.ROWS[row]
+    };
+
+    this.props.game.history.push(currentSquare.square)
+  },
+
   createTiles() {
     let squares = [],
         pieces = [],
@@ -49,16 +60,10 @@ const Board = React.createClass({
 
     if (selectedPiece !== null) {
       let row = selectedPiece.row,
-          col = selectedPiece.column,
-          moves = []
-
-      const currentSquare = {
-        square: CONSTANTS.COLUMNS[col] + CONSTANTS.ROWS[row]
-      };
+          col = selectedPiece.column
 
       this.startPos = [row, col]
-      moves.push(currentSquare.square)
-      this.props.game.history.push(currentSquare.square)
+
     }
 
     board.forEach((row, rowIndex) => {
@@ -101,7 +106,7 @@ const Board = React.createClass({
   },
 
   canCastle(piece) {
-    
+
     let type = piece.constructor.name,
         king = this.state.piece,
         kingMoves = king.possibleMoves(),
@@ -143,8 +148,9 @@ const Board = React.createClass({
     if (this.state.selectedPiece === null) {
       return;
     }
-
     this.endPos = [row, column]
+    this.pushHistory(this.startPos)
+    this.pushHistory(this.endPos)
     this.props.game.move(this.startPos, this.endPos)
     this.turnComplete()
   },
