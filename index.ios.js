@@ -80,8 +80,8 @@ var iosChess = React.createClass({
 
     if (history.length > 0) {
 
-      let fromPos = history[history.length - 1],
-          toPos = history[history.length - 2]
+      let fromPos = history[history.length - 2],
+          toPos = history[history.length - 1]
       log = (
         <Text style={styles.log}>
           {player} moved from {fromPos} to {toPos}
