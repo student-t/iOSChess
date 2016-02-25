@@ -11,31 +11,18 @@ const Square = require('./square.ios');
 const Piece = require('./piece.ios');
 const CONSTANTS = require('./constants.ios');
 
-var keys = [
-            [0, 1, 2, 3, 4, 5, 6, 7],
-            [8, 9, 10, 11, 12, 13, 14, 15],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [16, 17, 18, 19, 20, 21, 22, 23],
-            [24, 25, 26, 27, 28, 29, 30, 31]
-          ];
-
 const Board = React.createClass({
   getInitialState() {
     return { selectedPiece: null }
   },
 
   render() {
-
     let tiles = this.createTiles()
-
     return (
       <View style={styles.container}>
         {tiles}
       </View>
-    );
+    )
   },
 
   pushHistory(pos) {
@@ -44,7 +31,7 @@ const Board = React.createClass({
 
     const currentSquare = {
       square: CONSTANTS.COLUMNS[col] + CONSTANTS.ROWS[row]
-    };
+    }
 
     this.props.game.history.push(currentSquare.square)
   },
@@ -63,7 +50,6 @@ const Board = React.createClass({
           col = selectedPiece.column
 
       this.startPos = [row, col]
-
     }
 
     board.forEach((row, rowIndex) => {
@@ -102,11 +88,11 @@ const Board = React.createClass({
         }
       })
     })
+
     return [...squares, ...pieces]
   },
 
   canCastle(piece) {
-
     let type = piece.constructor.name,
         king = this.state.piece,
         kingMoves = king.possibleMoves(),
@@ -134,13 +120,18 @@ const Board = React.createClass({
         this.onSquareSelected(row, column)
       } else {
         if (selectedPiece.row !== row || selectedPiece.column !== column) {
-          this.setState({ selectedPiece: {row: row, column: column} })
+          this.setState({
+            selectedPiece: {row: row, column: column}
+          })
         } else {
           this.setState({ selectedPiece: null })
         }
       }
     } else {
-      this.setState({ selectedPiece: {row: row, column: column}, piece: piece });
+      this.setState({
+        selectedPiece: {row: row, column: column},
+        piece: piece
+      })
     }
   },
 
@@ -171,6 +162,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   }
-});
+})
 
 module.exports = Board;

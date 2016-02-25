@@ -5,6 +5,8 @@ var {
   TouchableHighlight,
   StyleSheet,
   Text,
+  Image,
+  Linking,
   View,
 } = React;
 
@@ -18,7 +20,10 @@ var game;
 var iosChess = React.createClass({
   getInitialState() {
     return {
-      turn: CONSTANTS.WHITE, game: new Game(), gameOver: false
+      loadApp: true,
+      turn: CONSTANTS.WHITE,
+      game: new Game(),
+      gameOver: false
     };
   },
 
@@ -26,7 +31,36 @@ var iosChess = React.createClass({
     this.setState({turn: CONSTANTS.WHITE, game: new Game(), gameOver: false})
   },
 
+  startFirstGame() {
+    this.setState({loadApp: false})
+  },
+
+  openGitHub() {
+    Linking.openURL("https://github.com/stevendikowitz/iOSChess")
+  },
+
+  openPortfolio() {
+    Linking.openURL("http://stevendikowitz.com")
+  },
+
   render() {
+    if (this.state.loadApp) {
+      return (
+        <View ref='this' style={styles.container}>
+          <Image source={require('chess.png')} style={styles.image} />
+          <Text style={styles.logoText}>iOSChess</Text>
+          <Text style={styles.startFirstGame} onPress={this.startFirstGame}>
+            Play Chess
+          </Text>
+          <Text style={styles.gitHub} onPress={this.openGitHub}>
+            GitHub Repo
+          </Text>
+          <Text style={styles.portfolio} onPress={this.openPortfolio}>
+            stevendikowitz.com
+          </Text>
+        </View>
+      )
+    }
 
     let turn = this.state.turn,
         player = (turn === CONSTANTS.WHITE) ? "Black" : "White",
@@ -82,17 +116,6 @@ var iosChess = React.createClass({
   turnComplete() {
     let gameOver = this.state.game.isOver()
     this.setState({ turn: this.state.turn === CONSTANTS.WHITE ? CONSTANTS.BLACK : CONSTANTS.WHITE, gameOver: gameOver })
-  },
-
-  componentWillMount() {
-    // this.setState({game: new Game()})
-  },
-
-  componentDidMount() {
-    // this.forceUpdate()
-    // setTimeout(() => {
-    //   Animation.startAnimation({node:this.refs['this'], duration: 300, delay: 0, easing: 'easeInOutQuad', properties: {opacity: 1}});
-    // }, 0);
   }
 });
 
@@ -114,12 +137,48 @@ var styles = StyleSheet.create({
     marginLeft: 25
   },
 
+  image: {
+    position: 'absolute',
+    top: 250,
+    height: 500,
+    width: 500,
+    opacity: 0.75
+  },
+
+  logoText: {
+    fontSize: 40,
+    position: 'absolute',
+    width: 375,
+    textAlign: 'center',
+    marginLeft: 25,
+    fontWeight: "600",
+    top: 225
+  },
+
   log: {
     fontSize: 18,
     position: 'absolute',
     width: 375,
     textAlign: 'center',
     bottom: 140,
+    marginLeft: 25
+  },
+
+  gitHub: {
+    fontSize: 18,
+    position: 'absolute',
+    width: 375,
+    textAlign: 'center',
+    bottom: 140,
+    marginLeft: 25
+  },
+
+  portfolio: {
+    fontSize: 18,
+    position: 'absolute',
+    width: 375,
+    textAlign: 'center',
+    bottom: 120,
     marginLeft: 25
   },
 
@@ -147,6 +206,17 @@ var styles = StyleSheet.create({
     borderRadius: 3
   },
 
+  startFirstGame: {
+    fontSize: 30,
+    position: 'absolute',
+    width: 375,
+    textAlign: 'center',
+    top: 300,
+    backgroundColor: "#c3c3c3",
+    borderRadius: 3,
+    marginLeft: 20
+  },
+
   history: {
     marginTop: 20,
     fontSize: 20,
@@ -158,8 +228,3 @@ var styles = StyleSheet.create({
 })
 
 AppRegistry.registerComponent('iosChess', () => iosChess)
-
-// <Text style={styles.history}>
-//   {history.length > 0 ?
-//     `${player} moved ${history[history.length - 1].to} to ${history[history.length - 1].from}` : ''}
-// </Text>

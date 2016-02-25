@@ -8,8 +8,6 @@ import React, {
   View
 } from 'react-native';
 
-const CONSTANTS = require('./constants.ios');
-
 const Piece = React.createClass({
 
   onPress() {
@@ -24,13 +22,13 @@ const Piece = React.createClass({
     const containerStyle = {
       top: this.props.row * (375/8),
       left: this.props.column * (375/8)
-    };
+    }
 
     const textStyle = {
       color: this.props.color
-    };
+    }
 
-    if (this.props.selectable)
+    if (this.props.selectable) {
       return (
         <View style={[styles.container, containerStyle]} ref='this'>
           <TouchableHighlight onPress={this.onPress} >
@@ -39,38 +37,40 @@ const Piece = React.createClass({
             </Text>
           </TouchableHighlight>
         </View>
-      );
-    else
+      )
+    } else {
       return (
         <View style={[styles.container, containerStyle]} ref='this'>
-            <Text style={[styles.text, textStyle]}>
-              {this.props.piece}
-            </Text>
+          <Text style={[styles.text, textStyle]}>
+            {this.props.piece}
+          </Text>
         </View>
-      );
+      )
+    }
   },
 
   componentWillUpdate(nextProps, nextState) {
   },
 
   componentDidMount() {
-    this.forceUpdate()
+    // this.forceUpdate()
   }
-});
+})
 
 const styles = StyleSheet.create({
-    container: {
-      position: 'absolute',
-      width: 375/8,
-      height: 375/8,
-      backgroundColor: 'rgba(0, 0, 0, 0)',
-      opacity: 1
-    },
-    text: {
-      fontSize: 40,
-      textAlign: 'center',
-      fontWeight: 'bold'
-    }
-});
+  container: {
+    position: 'absolute',
+    width: 375/8,
+    height: 375/8,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    opacity: 1
+  },
+
+  text: {
+    fontSize: 40,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  }
+})
 
 module.exports = Piece
