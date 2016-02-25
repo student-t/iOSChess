@@ -47,7 +47,7 @@ var iosChess = React.createClass({
     if (this.state.loadApp) {
       return (
         <View ref='this' style={styles.container}>
-          <Image source={require('chess.png')} style={styles.image} />
+          <Image source={require('./App/Assets/chess.png')} style={styles.image} />
           <Text style={styles.logoText}>iOSChess</Text>
           <Text style={styles.startFirstGame} onPress={this.startFirstGame}>
             Play Chess
