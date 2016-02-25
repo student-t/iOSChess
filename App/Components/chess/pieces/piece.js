@@ -231,18 +231,19 @@ class King extends SteppingPiece {
 
 
     if (leftOne === null && leftTwo === null && leftThree === null) {
-      if (leftRook.constructor.name === "Rook" && !leftRook.moved) {
-      // &&
-      // !board.movesIntoCheck(pos, leftOne, color) && !board.movesIntoCheck(pos, leftTwo, color) &&
-      // !board.movesIntoCheck(pos, leftThree, color)) {
-        moves.push([x, y - 2])
+      if (
+        leftRook.constructor.name === "Rook" && !leftRook.moved &&
+        !board.inCheck(this.color) && !board.movesIntoCheck(pos, [x, y - 1], color) &&
+        !board.movesIntoCheck(pos, [x, y - 2], color)) {
+          moves.push([x, y - 2])
       }
     }
 
     if ( rightOne === null && rightTwo === null ) {
-      if (rightRook.constructor.name === "Rook" && !rightRook.moved)  {
-      // && !board.movesIntoCheck(pos, rightOne, color) && !board.movesIntoCheck(pos, rightTwo, color)) {
-        moves.push([x, y + 2])
+      if (
+        rightRook.constructor.name === "Rook" && !rightRook.moved &&
+        !board.inCheck(this.color) && !board.movesIntoCheck(pos, [x , y + 2], color) && !board.movesIntoCheck(pos, [x , y + 1], color)) {
+          moves.push([x, y + 2])
       }
     }
 
