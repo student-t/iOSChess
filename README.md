@@ -2,7 +2,7 @@
 
 ![ioschess]
 
-iOSChess was built over the course of a 3 days because I wanted a fun project to work on while I taught myself React Native and ES6 Syntax.
+iOSChess was built over the course of 3 days because I wanted a fun project to work on while I taught myself React Native and ES6 Syntax.
 
 ## How To Run
 Because I don't have a developer account with Apple yet, I cannot put iOSChess in the App Store. However, you can run iOSChess on OS X or on your iOS device by doing the following:
