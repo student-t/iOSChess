@@ -19,16 +19,17 @@ iOSChess keeps track of move history
 
 ![history]
 
-Completely custom Chess logic inclduing in check, checkmate, and castling
+Completely custom Chess logic including in check, checkmate, and castling
 
 ![checkmate]
 
 ## Future Improvements
-* I learned what the move 'en passant' as I was finishing this project up and didn't have time to finish it (or make sure I understand it completely). The basic logic for the code is written and commented out, but I didn't want to add it without making sure it works perfectly.
+* I learned the move 'en passant' as I was working on this project and didn't have time to finish it (or make sure I understand it completely). The basic logic for the code is written and commented out, but I didn't want to add it without making sure it works perfectly.
 * Play against the computer (including creating AI move tree)
 * Promotion (forgot about this rule in Chess...I don't play much)
 * Add animations and make the layout more aesthetically pleasing
 * Reverse a move
+* Write tests :)
 
 
 
